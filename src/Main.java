@@ -1,18 +1,19 @@
 import java.lang.reflect.Array;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws NoSuchAlgorithmException {
+        System.out.println("digest: " + hashFunction());
+    }
+
+    public static String hashFunction() throws NoSuchAlgorithmException {
         byte[] password = "123456".getBytes();
-
         MessageDigest md = MessageDigest.getInstance("MD5");
-
         md.update(password);
-
         byte[] digest = md.digest();
-
-        System.out.println("digest: " + bytesToHex(digest));
+        return bytesToHex(digest);
     }
 
     public static String bytesToHex(byte[] bytes) {
@@ -34,5 +35,11 @@ public class Main {
         char[] current = charset.toCharArray();
 
         heapPermute(length, current, targetHash);
+    }
+
+    public static void heapPermute(int n, char[] current, String targetHash) {
+        if (n == 1) {
+            Arrays.toString(current);
+        }
     }
 }
