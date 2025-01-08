@@ -24,22 +24,44 @@ public class Main {
         return out.toString();
     }
 
-    public static void bruteForceMD5(String targetHash, String charset, int maxLength) {
+    public static void bruteForceMD5(String targetHash, String charset, int maxLength) throws NoSuchAlgorithmException {
         for (int length = 1; length <= maxLength; length++) {
             System.out.println("Trying passwords of length: " + length);
             generatePermutations(charset, length, targetHash);
         }
     }
 
-    public static void generatePermutations(String charset, int length, String targetHash) {
+    public static void generatePermutations(String charset, int length, String targetHash) throws NoSuchAlgorithmException {
         char[] current = charset.toCharArray();
 
         heapPermute(length, current, targetHash);
     }
 
-    public static void heapPermute(int n, char[] current, String targetHash) {
+    public static void heapPermute(int n, char[] current, String targetHash) throws NoSuchAlgorithmException {
         if (n == 1) {
-            Arrays.toString(current);
+            String string = Arrays.toString(current);
+            System.out.println(string);
+
+            String md5Hash = hashFunction();
+
+            if (md5Hash.equals(targetHash)) {
+                System.out.println("Password found: " + string);
+            }
         }
+
+        for (int i = 0; i < n; i++) {
+            heapPermute(n - 1, current, targetHash);
+
+            if (n % 2 == 0) {
+                char temp = current[1];
+                current[1] = current[2];
+                current[2] = temp;
+            } else {
+                char temp = current[1];
+                current[1] = current[2];
+                current[2] = temp;
+            }
+        }
+
     }
 }
