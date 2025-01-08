@@ -21,4 +21,15 @@ public class Main {
         }
         return out.toString();
     }
+
+    public static void bruteForceMD5(String targetHash, String charset, int maxLength) {
+        for (int length = 1; length <= maxLength; length++) {
+            System.out.println("Trying passwords of length: " + length);
+            generatePermutations(charset, length, targetHash);
+        }
+    }
+
+    public static void generatePermutations(String charset, int length, String targetHash) {
+
+    }
 }
