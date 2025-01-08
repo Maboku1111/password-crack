@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -30,6 +31,8 @@ public class Main {
     }
 
     public static void generatePermutations(String charset, int length, String targetHash) {
+        char[] current = charset.toCharArray();
 
+        heapPermute(length, current, targetHash);
     }
 }
