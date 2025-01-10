@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -6,6 +5,7 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) throws NoSuchAlgorithmException {
         System.out.println("digest: " + hashFunction());
+        System.out.println(bruteForceMD5("7a95bf926a0333f57705aeac07a362a2", "1234", 4));
     }
 
     public static String hashFunction() throws NoSuchAlgorithmException {
@@ -24,11 +24,12 @@ public class Main {
         return out.toString();
     }
 
-    public static void bruteForceMD5(String targetHash, String charset, int maxLength) throws NoSuchAlgorithmException {
+    public static String bruteForceMD5(String targetHash, String charset, int maxLength) throws NoSuchAlgorithmException {
         for (int length = 1; length <= maxLength; length++) {
             System.out.println("Trying passwords of length: " + length);
             generatePermutations(charset, length, targetHash);
         }
+        return targetHash;
     }
 
     public static void generatePermutations(String charset, int length, String targetHash) throws NoSuchAlgorithmException {
@@ -53,15 +54,20 @@ public class Main {
             heapPermute(n - 1, current, targetHash);
 
             if (n % 2 == 0) {
-                char temp = current[1];
-                current[1] = current[2];
-                current[2] = temp;
+                swap(Arrays.toString(current), i, n);
             } else {
-                char temp = current[1];
-                current[1] = current[2];
-                current[2] = temp;
+                swap(Arrays.toString(current), n, i);
             }
         }
-
     }
+
+    public static String swap(String str, int i, int j) {
+        char temp;
+        char[] charArray = str.toCharArray();
+        temp = charArray[i];
+        charArray[i] = charArray[j];
+        charArray[j] = temp;
+
+        return String.valueOf(charArray);
+    };
 }
